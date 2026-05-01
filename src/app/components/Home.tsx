@@ -47,11 +47,15 @@ export default function Home() {
     };
 
     try {
-      await axios.post("http://127.0.0.1:8000/leads", data, {
-        headers: {
-          "Content-Type": "application/json",
+      await axios.post(
+        "https://y-r-soft-consulting-back.vercel.app/leads",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       setIsSubmitted(true);
     } catch (error) {

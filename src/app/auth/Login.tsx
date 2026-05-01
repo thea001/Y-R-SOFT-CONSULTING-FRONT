@@ -14,10 +14,13 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://y-r-soft-consulting-back.vercel.app/auth/login",
+        {
+          email,
+          password,
+        },
+      );
 
       localStorage.setItem("token", res.data.access_token);
       navigate("/leads");

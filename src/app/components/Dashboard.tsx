@@ -108,7 +108,9 @@ export default function Dashboard() {
 
   const fetchLeads = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/leads");
+      const response = await axios.get(
+        "https://y-r-soft-consulting-back.vercel.app/leads",
+      );
       const calculatedStats = calculateStats(response.data);
       setStats(calculatedStats);
     } catch (error) {

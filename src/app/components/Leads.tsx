@@ -37,7 +37,9 @@ export default function Leads() {
 
   const fetchLeads = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/leads");
+      const response = await axios.get(
+        "https://y-r-soft-consulting-back.vercel.app/leads",
+      );
       setLeads(response.data);
       setFilteredLeads(response.data);
     } catch (error) {
