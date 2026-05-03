@@ -94,7 +94,7 @@ export default function Home() {
       <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
         <nav className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex-1"></div>
+            <div className="flex-1 ms-14"></div>
             <div className="flex items-center justify-center gap-8">
               <a
                 href="#home"
@@ -109,7 +109,7 @@ export default function Home() {
                 Services
               </a>
               <div className="mx-4">
-                <h1 className="text-2xl font-bold text-white tracking-wider">
+                <h1 className="text-3xl font-bold text-white tracking-wider">
                   Y.R SOFT CONSULTING
                 </h1>
               </div>
