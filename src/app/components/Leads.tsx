@@ -71,6 +71,7 @@ export default function Leads() {
       setFilteredLeads((prevFilteredLeads) =>
         prevFilteredLeads.filter((lead) => lead.id !== id),
       );
+      setSelectedLead(null);
     } catch (error) {
       console.error("Error deleting lead:", error);
     }
