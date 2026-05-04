@@ -58,6 +58,24 @@ export default function Leads() {
     }
   };
 
+  const deleteLead = async (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this lead?")) {
+      return;
+    }
+
+    try {
+      await axios.delete(
+        `https://y-r-soft-consulting-back.vercel.app/leads/${id}`,
+      );
+      setLeads((prevLeads) => prevLeads.filter((lead) => lead.id !== id));
+      setFilteredLeads((prevFilteredLeads) =>
+        prevFilteredLeads.filter((lead) => lead.id !== id),
+      );
+    } catch (error) {
+      console.error("Error deleting lead:", error);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -583,6 +601,17 @@ export default function Leads() {
 
             {/* Modal Footer */}
             <div className="px-8 py-5 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
+              {/* delete */}
+              <button
+                onClick={() => {
+                  // Implement delete functionality here
+                  deleteLead(selectedLead.id);
+                }}
+                className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl transition-colors shadow-sm  flex items-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Delete Lead
+              </button>
               <a
                 href={`mailto:${selectedLead.email}`}
                 className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-xl transition-colors shadow-sm flex items-center gap-2"
