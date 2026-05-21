@@ -583,7 +583,7 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-4">Connect</h4>
               <a
-                href="https://www.linkedin.com/company/y-r-soft-consulting/posts/?feedView=all"
+                href="https://www.linkedin.com/posts/y-r-soft-consulting_expertise-transformationdigitale-innovation-activity-7452760088387325952-FP-B/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEAGExABCnnuCNYH_OuWj-wTKKOlGA1lJcs"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition-colors"
