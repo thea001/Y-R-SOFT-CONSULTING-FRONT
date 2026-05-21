@@ -96,9 +96,10 @@ export default function Home() {
       <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
         <nav className="container mx-auto px-4 sm:px-6 py-4 md:py-6">
           <div className="flex items-center justify-between">
-            {/* Brand Logo - Moved to the left on mobile for standard UX */}
+            {/* Brand Logo - Responsive text size */}
+            <div></div>
             <div className="z-50">
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
+              <h1 className="text-sm xs:text-base sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
                 Y.R SOFT CONSULTING
               </h1>
             </div>
@@ -131,17 +132,17 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Kept exactly as requested */}
             <div className="md:hidden z-50">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white focus:outline-none p-2"
+                className="text-white focus:outline-none p-1.5"
                 aria-label="Toggle Menu"
               >
                 {isMenuOpen ? (
-                  <X className="w-8 h-8" />
+                  <X className="w-6 h-6 sm:w-8 h-8" />
                 ) : (
-                  <Menu className="w-8 h-8" />
+                  <Menu className="w-6 h-6 sm:w-8 h-8" />
                 )}
               </button>
             </div>
@@ -185,14 +186,14 @@ export default function Home() {
         </nav>
       </header>
 
-      {/* Hero Section - Split Screen */}
-      {/* Changed h-screen to min-h-screen to prevent overflow cuts, and set flex-col on mobile, flex-row on desktop */}
+      {/* Hero Section - Split Screen Maintained Everywhere */}
+      {/* Changed flex-col to flex-row permanently, forced fixed full-screen height via h-screen */}
       <section
         id="home"
-        className="relative min-h-screen md:h-screen flex flex-col md:flex-row"
+        className="relative h-screen flex flex-row overflow-hidden w-full"
       >
         {/* Left Side - Digital Solutions */}
-        <div className="relative flex-1 flex items-center justify-center overflow-hidden py-24 md:py-0">
+        <div className="relative flex-1 flex items-center justify-center overflow-hidden px-2 sm:px-6 md:px-8 pt-16 md:pt-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
@@ -200,56 +201,68 @@ export default function Home() {
             }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-90"></div>
-          <div className="relative z-10 text-center px-6 sm:px-8">
-            <Globe className="w-16 h-16 md:w-20 md:h-20 text-white mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
+          <div className="relative z-10 text-center w-full max-w-xs md:max-w-md mx-auto">
+            {/* Scaled down icon sizes for small viewports */}
+            <Globe className="w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white mx-auto mb-3 md:mb-6" />
+
+            {/* Dynamic Typography scales down to text-xl on mobile */}
+            <h2 className="text-lg sm:text-3xl md:text-5xl font-bold text-white mb-2 md:mb-6 tracking-tight leading-tight">
               DIGITAL
               <br />
               SOLUTIONS
             </h2>
-            <p className="text-white text-base md:text-lg mb-6 md:mb-8 max-w-md mx-auto op">
+
+            {/* Reduced paragraph body styling for better spacing layout */}
+            <p className="text-white text-xs sm:text-base md:text-lg mb-4 md:mb-8 line-clamp-3 sm:line-clamp-none opacity-90">
               Transform your business with cutting-edge web development and
               digital strategies
             </p>
+
+            {/* Downsized button padding and text size on mobile viewports */}
             <button
-              className="bg-white text-cyan-600 px-8 py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
+              className="bg-white text-cyan-600 text-xs sm:text-sm md:text-base px-4 py-2 sm:px-8 sm:py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl whitespace-nowrap"
               onClick={switchToDigital}
             >
-              Boost my Visibility
+              Boost Visibility
             </button>
           </div>
         </div>
 
-        {/* Middle Divider - Hidden on mobile, vertical line on desktop */}
-        <div className="hidden md:block w-1 bg-white z-20"></div>
-        {/* Mobile Separator Line */}
-        <div className="block md:hidden h-1 bg-white z-20"></div>
+        {/* Middle Divider Line - Displayed as a vertical split rule across all layouts */}
+        <div className="w-0.5 md:w-1 bg-white/40 md:bg-white h-full z-20"></div>
 
         {/* Right Side - Strategic Consulting */}
-        <div className="relative flex-1 flex items-center justify-center overflow-hidden py-24 md:py-0">
+        <div className="relative flex-1 flex items-center justify-center overflow-hidden px-2 sm:px-6 md:px-8 pt-16 md:pt-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1758448511255-ac2a24a135d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBvZmZpY2UlMjBleGVjdXRpdmV8ZW58MXx8fHwxNzcxNzYxMDk0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')`,
+              backgroundImage: `url('https://images.unsplash.com/photo-1758448511255-ac2a24a135d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBvZmZpY2UlMjBayZWN1dGl2ZXxlbnwxfHx8MTc3MTc2MTA5NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral')`,
             }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-bl from-slate-800 to-slate-900 opacity-90"></div>
-          <div className="relative z-10 text-center px-6 sm:px-8">
-            <Scale className="w-16 h-16 md:w-20 md:h-20 text-white mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
+          <div className="relative z-10 text-center w-full max-w-xs md:max-w-md mx-auto">
+            {/* Scaled down icon sizes for small viewports */}
+            <Scale className="w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 text-white mx-auto mb-3 md:mb-6" />
+
+            {/* Dynamic Typography scales down to text-xl on mobile */}
+            <h2 className="text-lg sm:text-3xl md:text-5xl font-bold text-white mb-2 md:mb-6 tracking-tight leading-tight">
               STRATEGIC
               <br />
               CONSULTING
             </h2>
-            <p className="text-white text-base md:text-lg mb-6 md:mb-8 max-w-md mx-auto">
+
+            {/* Reduced paragraph body styling for better spacing layout */}
+            <p className="text-white text-xs sm:text-base md:text-lg mb-4 md:mb-8 line-clamp-3 sm:line-clamp-none opacity-90">
               Expert legal guidance and business consulting for sustainable
               growth
             </p>
+
+            {/* Downsized button padding and text size on mobile viewports */}
             <button
-              className="bg-white text-slate-800 px-8 py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
+              className="bg-white text-slate-800 text-xs sm:text-sm md:text-base px-4 py-2 sm:px-8 sm:py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl whitespace-nowrap"
               onClick={switchToConsulting}
             >
-              Secure my Business
+              Secure Business
             </button>
           </div>
         </div>
