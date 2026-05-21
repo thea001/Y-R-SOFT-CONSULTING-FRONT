@@ -5,7 +5,10 @@ import {
   Building2,
   Globe,
   Users,
+  Menu,
+  X,
 } from "lucide-react";
+import React from "react";
 import { useState } from "react";
 import { Link } from "react-router";
 
@@ -88,7 +91,7 @@ export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
   const [email, setEmail] = useState("");
-
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const filteredArticles = articles.filter((article) => {
     const matchesSearch =
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -111,16 +114,21 @@ export default function Blog() {
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
       {/* Header */}
-      <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white">
-        <nav className="container mx-auto px-6 py-6">
+      <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white relative">
+        <nav className="container mx-auto px-4 sm:px-6 py-4 md:py-6">
           <div className="flex items-center justify-between">
-            <Link
-              to="/"
-              className="text-2xl font-bold tracking-wider hover:text-cyan-400 transition-colors"
-            >
-              Y.R SOFT CONSULTING
-            </Link>
-            <div className="flex items-center gap-8">
+            {/* Brand Logo */}
+            <div className="z-50">
+              <Link
+                to="/"
+                className="text-xl sm:text-2xl font-bold tracking-wider hover:text-cyan-400 transition-colors"
+              >
+                Y.R SOFT CONSULTING
+              </Link>
+            </div>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-8">
               <Link to="/" className="hover:text-cyan-400 transition-colors">
                 Home
               </Link>
@@ -140,18 +148,70 @@ export default function Blog() {
                 Contact
               </a>
             </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden z-50">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white focus:outline-none p-2"
+                aria-label="Toggle Menu"
+              >
+                {isMenuOpen ? (
+                  <X className="w-8 h-8" />
+                ) : (
+                  <Menu className="w-8 h-8" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Drawer Overlay */}
+          <div
+            className={`fixed inset-0 bg-slate-900/95 backdrop-blur-md transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center gap-8 z-40 ${
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <Link
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-cyan-400 transition-colors"
+            >
+              Home
+            </Link>
+            <a
+              href="/#services"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-cyan-400 transition-colors"
+            >
+              Services
+            </a>
+            <Link
+              to="/blog"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-cyan-400 text-2xl font-semibold"
+            >
+              Blog
+            </Link>
+            <a
+              href="#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-cyan-400 transition-colors"
+            >
+              Contact
+            </a>
           </div>
         </nav>
 
         {/* Hero Section */}
-        <div className="container mx-auto px-6 py-16 text-center">
+        {/* Adjusted typography scales (text-3xl to text-5xl) and padding for phone screens */}
+        <div className="container mx-auto px-4 sm:px-6 py-12 md:py-16 text-center">
           <h1
-            className="text-5xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight"
             style={{ fontFamily: "Playfair Display, serif" }}
           >
             Insights & Expertise
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-2">
             Stay informed with the latest trends in digital transformation and
             corporate advisory
           </p>

@@ -13,10 +13,12 @@ import {
   Phone,
   Mail,
   MessageSquare,
+  Menu,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 import axios from "axios";
+import React from "react";
 
 export default function Home() {
   const [activeModal, setActiveModal] = useState<
@@ -27,7 +29,7 @@ export default function Home() {
     "email",
   );
   const [discoveryCall, setDiscoveryCall] = useState(false);
-
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -92,10 +94,17 @@ export default function Home() {
     >
       {/* Navigation Header */}
       <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
-        <nav className="container mx-auto px-6 py-6">
+        <nav className="container mx-auto px-4 sm:px-6 py-4 md:py-6">
           <div className="flex items-center justify-between">
-            <div className="flex-1 ms-14"></div>
-            <div className="flex items-center justify-center gap-8">
+            {/* Brand Logo - Moved to the left on mobile for standard UX */}
+            <div className="z-50">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
+                Y.R SOFT CONSULTING
+              </h1>
+            </div>
+
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-8">
               <a
                 href="#home"
                 className="text-white hover:text-gray-200 transition-colors"
@@ -108,11 +117,6 @@ export default function Home() {
               >
                 Services
               </a>
-              <div className="mx-4">
-                <h1 className="text-3xl font-bold text-white tracking-wider">
-                  Y.R SOFT CONSULTING
-                </h1>
-              </div>
               <Link
                 to="/blog"
                 className="text-white hover:text-gray-200 transition-colors"
@@ -126,15 +130,69 @@ export default function Home() {
                 Contact
               </a>
             </div>
-            <div className="flex-1"></div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden z-50">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white focus:outline-none p-2"
+                aria-label="Toggle Menu"
+              >
+                {isMenuOpen ? (
+                  <X className="w-8 h-8" />
+                ) : (
+                  <Menu className="w-8 h-8" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Navigation Drawer Overlay */}
+          <div
+            className={`fixed inset-0 bg-slate-900/95 backdrop-blur-md transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center gap-8 z-40 ${
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <a
+              href="#home"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-gray-300 transition-colors"
+            >
+              Home
+            </a>
+            <a
+              href="#services"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-gray-300 transition-colors"
+            >
+              Services
+            </a>
+            <Link
+              to="/blog"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-gray-300 transition-colors"
+            >
+              Blog
+            </Link>
+            <a
+              href="#contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-2xl hover:text-gray-300 transition-colors"
+            >
+              Contact
+            </a>
           </div>
         </nav>
       </header>
 
       {/* Hero Section - Split Screen */}
-      <section id="home" className="relative h-screen flex">
+      {/* Changed h-screen to min-h-screen to prevent overflow cuts, and set flex-col on mobile, flex-row on desktop */}
+      <section
+        id="home"
+        className="relative min-h-screen md:h-screen flex flex-col md:flex-row"
+      >
         {/* Left Side - Digital Solutions */}
-        <div className="relative flex-1 flex items-center justify-center overflow-hidden">
+        <div className="relative flex-1 flex items-center justify-center overflow-hidden py-24 md:py-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
@@ -142,19 +200,19 @@ export default function Home() {
             }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-600 opacity-90"></div>
-          <div className="relative z-10 text-center px-8">
-            <Globe className="w-20 h-20 text-white mx-auto mb-6" />
-            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">
+          <div className="relative z-10 text-center px-6 sm:px-8">
+            <Globe className="w-16 h-16 md:w-20 md:h-20 text-white mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
               DIGITAL
               <br />
               SOLUTIONS
             </h2>
-            <p className="text-white text-lg mb-8 max-w-md mx-auto">
+            <p className="text-white text-base md:text-lg mb-6 md:mb-8 max-w-md mx-auto op">
               Transform your business with cutting-edge web development and
               digital strategies
             </p>
             <button
-              className="bg-white text-cyan-600 px-10 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
+              className="bg-white text-cyan-600 px-8 py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
               onClick={switchToDigital}
             >
               Boost my Visibility
@@ -162,11 +220,13 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Middle Divider */}
-        <div className="w-1 bg-white z-20"></div>
+        {/* Middle Divider - Hidden on mobile, vertical line on desktop */}
+        <div className="hidden md:block w-1 bg-white z-20"></div>
+        {/* Mobile Separator Line */}
+        <div className="block md:hidden h-1 bg-white z-20"></div>
 
         {/* Right Side - Strategic Consulting */}
-        <div className="relative flex-1 flex items-center justify-center overflow-hidden">
+        <div className="relative flex-1 flex items-center justify-center overflow-hidden py-24 md:py-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
@@ -174,19 +234,19 @@ export default function Home() {
             }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-bl from-slate-800 to-slate-900 opacity-90"></div>
-          <div className="relative z-10 text-center px-8">
-            <Scale className="w-20 h-20 text-white mx-auto mb-6" />
-            <h2 className="text-5xl font-bold text-white mb-6 tracking-tight">
+          <div className="relative z-10 text-center px-6 sm:px-8">
+            <Scale className="w-16 h-16 md:w-20 md:h-20 text-white mx-auto mb-6" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 tracking-tight">
               STRATEGIC
               <br />
               CONSULTING
             </h2>
-            <p className="text-white text-lg mb-8 max-w-md mx-auto">
+            <p className="text-white text-base md:text-lg mb-6 md:mb-8 max-w-md mx-auto">
               Expert legal guidance and business consulting for sustainable
               growth
             </p>
             <button
-              className="bg-white text-slate-800 px-10 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
+              className="bg-white text-slate-800 px-8 py-3.5 md:px-10 md:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
               onClick={switchToConsulting}
             >
               Secure my Business
@@ -194,7 +254,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* One-Stop Shop Section */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6">

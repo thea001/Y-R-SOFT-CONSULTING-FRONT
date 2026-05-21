@@ -2,15 +2,19 @@ import { useState } from "react";
 import axios from "axios";
 import { Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (isLoading) return;
+    setIsLoading(true);
     setError("");
 
     try {
@@ -26,6 +30,8 @@ export default function Login() {
       navigate("/leads");
     } catch (err) {
       setError("Invalid email or password");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,10 +80,40 @@ export default function Login() {
           </div>
 
           <button
-            className="w-full bg-slate-900 text-white py-3 rounded-lg font-semibold hover:bg-slate-800 transition"
+            className={`w-full bg-slate-900 text-white py-3 rounded-lg font-semibold hover:bg-slate-800 transition flex items-center justify-center gap-2 ${
+              isLoading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
             type="submit"
+            disabled={isLoading}
           >
-            Sign In to Dashboard
+            {isLoading ? (
+              <>
+                {/* Inline SVG Tailwind Spinner */}
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/v2000"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <span>Signing in...</span>
+              </>
+            ) : (
+              "Sign In to Dashboard"
+            )}
           </button>
         </form>
       </div>
