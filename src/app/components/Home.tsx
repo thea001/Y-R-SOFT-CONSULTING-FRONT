@@ -104,18 +104,11 @@ export default function Home() {
       style={{ fontFamily: "Montserrat, sans-serif" }}
     >
       {/* Navigation Header */}
-      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
-        <nav className="container mx-auto px-4 sm:px-6 py-4 md:py-6">
-          <div className="flex items-center justify-between">
-            {/* Brand Logo - Responsive text size */}
-            <div></div>
-            <div className="z-50">
-              <h1 className="ms-16 text-sm xs:text-base sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
-                Y.R SOFT CONSULTING
-              </h1>
-            </div>
 
-            {/* Desktop Navigation Links */}
+      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
+        <nav className="w-full px-4 sm:px-6 py-4 md:py-6">
+          <div className="relative flex items-center justify-between min-h-[40px]">
+            {/* Left side desktop links */}
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="#home"
@@ -129,6 +122,30 @@ export default function Home() {
               >
                 Services
               </a>
+            </div>
+
+            {/* Brand Logo - Perfectly split and bound to the center axis line */}
+            <div className="absolute left-1/2 -translate-x-1/2 z-50 flex items-center w-full max-w-[90vw] sm:max-w-none pointer-events-none">
+              {/* Left Side: Y.R SOFT (Anchored to end/right of the left screen split) */}
+              <div className="flex-1 text-right pr-2 sm:pr-4">
+                <h1 className="text-xs xs:text-sm sm:text-2xl md:text-3xl font-bold text-white tracking-wider inline-block pointer-events-auto whitespace-nowrap">
+                  Y.R SOFT
+                </h1>
+              </div>
+
+              {/* Center Gap Spacer matching your middle divider line thickness */}
+              <div className="w-0.5 md:w-1 entry-spacer"></div>
+
+              {/* Right Side: CONSULTING (Anchored to start/left of the right screen split) */}
+              <div className="flex-1 text-left pl-2 sm:pl-4">
+                <h1 className="text-xs xs:text-sm sm:text-2xl md:text-3xl font-bold text-white tracking-wider inline-block pointer-events-auto whitespace-nowrap">
+                  CONSULTING
+                </h1>
+              </div>
+            </div>
+
+            {/* Right side desktop links */}
+            <div className="hidden md:flex items-center gap-8 ml-auto">
               <Link
                 to="/blog"
                 className="text-white hover:text-gray-200 transition-colors"
@@ -143,8 +160,8 @@ export default function Home() {
               </a>
             </div>
 
-            {/* Mobile Menu Button - Kept exactly as requested */}
-            <div className="md:hidden z-50">
+            {/* Mobile Menu Button */}
+            <div className="md:hidden z-50 ml-auto">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-white focus:outline-none p-1.5"
