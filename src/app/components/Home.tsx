@@ -15,8 +15,8 @@ import {
   MessageSquare,
   Menu,
 } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import axios from "axios";
 import React from "react";
 
@@ -24,6 +24,7 @@ export default function Home() {
   const [activeModal, setActiveModal] = useState<
     "digital" | "consulting" | null
   >(null);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [contactMethod, setContactMethod] = useState<"email" | "phone">(
     "email",
@@ -87,6 +88,16 @@ export default function Home() {
     setActiveModal("consulting");
   };
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    // Read the '?form=' value from the URL
+    const formParam = searchParams.get("form");
+
+    if (formParam === "digital" || formParam === "consulting") {
+      setActiveModal(formParam);
+    }
+  }, [searchParams]);
+
   return (
     <div
       className="min-h-screen bg-white"
@@ -99,7 +110,7 @@ export default function Home() {
             {/* Brand Logo - Responsive text size */}
             <div></div>
             <div className="z-50">
-              <h1 className="text-sm xs:text-base sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
+              <h1 className="ms-16 text-sm xs:text-base sm:text-2xl md:text-3xl font-bold text-white tracking-wider">
                 Y.R SOFT CONSULTING
               </h1>
             </div>
